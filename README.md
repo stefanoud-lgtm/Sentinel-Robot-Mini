@@ -46,15 +46,16 @@ Home security is the core use case, but the robot is designed as a **general-pur
 
 | Feature | Status |
 |---|---|
-| Live video stream (own Wi-Fi access point, ~6 fps VGA) | ✅ Working |
+| Live video stream over the robot's own Wi-Fi | 🔧 Camera board upgraded, re-testing |
 | Rotating head with camera and long-range lidar | ✅ Servo tested |
-| Short-range obstacle detection (3× time-of-flight sensors) | 🔧 1 of 3 mounted and tested |
+| Short-range obstacle detection (3× laser time-of-flight sensors) | ✅ All 3 mounted |
 | Orientation tracking (gyro + accelerometer) | ✅ Tested |
 | On-board OLED status display | ✅ Tested |
 | Rechargeable battery with USB-C charging | ✅ Working |
 | Temperature monitoring and reaction | 📝 Planned |
 | Autonomous patrol | 📝 Planned |
 | Motion detection | 📝 Planned |
+| Sound and noise detection (on-board microphone) | 📝 Planned |
 | IR remote control | 📝 Planned |
 | Over-the-air updates for the camera | 📝 Planned |
 
@@ -65,9 +66,10 @@ Home security is the core use case, but the robot is designed as a **general-pur
 | Sensor | Role |
 |---|---|
 | **TF-Luna** (lidar) | Long-range distance, mounted on a rotating crown to scan the room |
-| **3× VL53L0X** (time-of-flight) | Short-range obstacle detection: front-right, front-left, rear |
+| **3× VL53L0X** (laser time-of-flight) | Short-range obstacle detection: front-right, front-left, rear |
 | **MPU6050** (IMU) | Heading and turn angles |
-| **OV2640** on ESP32-CAM | Live video stream |
+| **OV2640** on XIAO ESP32-S3 Sense | Live video stream |
+| **Digital microphone** on XIAO ESP32-S3 Sense | Sound and noise detection |
 | **DHT11** | Temperature and humidity |
 | **VS1838B** | IR remote receiver |
 | **Potentiometer** | Manual max-speed limit (fully left = stopped) |
@@ -77,7 +79,7 @@ Home security is the core use case, but the robot is designed as a **general-pur
 | Qty | Component | Notes |
 |:-:|---|---|
 | 1 | ESP32 DevKit (WROOM) | Main controller |
-| 1 | ESP32-CAM (OV2640) | In the head, streams video |
+| 1 | Seeed Studio XIAO ESP32-S3 Sense (OV2640, digital mic, 8 MB PSRAM) | In the head: video and audio |
 | 1 | TF-Luna lidar | UART, on the rotating crown |
 | 1 | SG90 micro servo | Rotates the head and the lidar crown |
 | 2 | TT gear motors + 65 mm wheels | Differential drive, 130 mm track |
@@ -116,7 +118,7 @@ flowchart LR
     SW --> B2["MT3608 #2<br>servo rail"]
     SW --> DRV["L9110S<br>motor driver"]
     B1 --> ESP["ESP32<br>main"]
-    B1 --> CAM["ESP32-CAM"]
+    B1 --> CAM["XIAO ESP32-S3<br>Sense camera"]
     B1 --> LUNA["TF-Luna"]
     ESP -->|3.3 V| SENS["All I²C and<br>low-power sensors"]
     B2 --> SERVO["SG90"]
@@ -171,7 +173,7 @@ The final rule: the VL53L0X sensors only flag obstacles **closer than 30 cm**. L
 
 **Three sensors, one I²C address.** All VL53L0X modules ship at `0x29`. With two powered at once the bus failed and readings got mixed up. The fix is a boot sequence: hold the sensors in reset with XSHUT, then wake them one at a time and give each a new address (`0x30`, `0x31`, `0x32`). One sensor has no XSHUT line, so the firmware must also handle a soft reset where it already holds its new address.
 
-**ESP32-CAM reboot loop.** The camera kept restarting under load: the brownout detector was tripping on supply dips. Disabling it confirmed the cause; the real fix is a stable 5 V rail with a bulk capacitor, after which the detector goes back on.
+**ESP32-CAM reboot loop.** The first camera board (an ESP32-CAM, later replaced by a XIAO ESP32-S3 Sense) kept restarting under load: the brownout detector was tripping on supply dips. Disabling it confirmed the cause; the real fix is a stable 5 V rail with a bulk capacitor, after which the detector goes back on.
 
 **Other small ones:** "camera not supported" turned out to be the ribbon cable or the XCLK frequency; the OLED is mounted upside down and needs a 180° rotation in software.
 
@@ -179,15 +181,16 @@ The final rule: the VL53L0X sensors only flag obstacles **closer than 30 cm**. L
 
 - [x] Body design and printing
 - [x] Power system with USB-C charging
-- [x] Camera live stream
+- [x] Camera live stream (first board)
 - [x] Servo, OLED and IMU tested
-- [x] Front-right distance sensor with tilted adapter
-- [ ] Left and rear distance sensors
+- [x] All 3 distance sensors mounted on tilted adapters
+- [ ] Camera upgrade to XIAO ESP32-S3 Sense
 - [ ] Remaining wiring (motors, lid controls, turret)
 - [ ] Main firmware: sensor filtering, speed ramps, status LED
 - [ ] Autonomous patrol
 - [ ] Temperature reaction
 - [ ] Motion detection
+- [ ] Sound detection
 - [ ] IR remote control
 - [ ] Final sensor calibration
 
