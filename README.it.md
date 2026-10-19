@@ -46,15 +46,16 @@ La sicurezza domestica è l'uso principale, ma il robot è pensato come una **pi
 
 | Funzione | Stato |
 |---|---|
-| Video in diretta (access point Wi-Fi proprio, ~6 fps VGA) | ✅ Funziona |
+| Video in diretta sulla rete Wi-Fi del robot | 🔧 Nuova scheda camera, in test |
 | Testa rotante con camera e lidar a lunga distanza | ✅ Servo testato |
-| Rilevamento ostacoli a corto raggio (3 sensori a tempo di volo) | 🔧 1 su 3 montato e testato |
+| Rilevamento ostacoli a corto raggio (3 sensori laser a tempo di volo) | ✅ Tutti e 3 montati |
 | Orientamento (giroscopio + accelerometro) | ✅ Testato |
 | Display OLED di stato | ✅ Testato |
 | Batteria ricaricabile via USB-C | ✅ Funziona |
 | Monitoraggio della temperatura e reazione | 📝 Previsto |
 | Pattuglia autonoma | 📝 Previsto |
 | Rilevamento del movimento | 📝 Previsto |
+| Rilevamento di suoni e rumori (microfono integrato) | 📝 Previsto |
 | Telecomando IR | 📝 Previsto |
 | Aggiornamenti OTA per la camera | 📝 Previsto |
 
@@ -65,9 +66,10 @@ La sicurezza domestica è l'uso principale, ma il robot è pensato come una **pi
 | Sensore | Ruolo |
 |---|---|
 | **TF-Luna** (lidar) | Distanza a lungo raggio, su una corona rotante per scansionare la stanza |
-| **3× VL53L0X** (tempo di volo) | Ostacoli a corto raggio: davanti destra, davanti sinistra, dietro |
+| **3× VL53L0X** (laser a tempo di volo) | Ostacoli a corto raggio: davanti destra, davanti sinistra, dietro |
 | **MPU6050** (IMU) | Direzione e angoli di rotazione |
-| **OV2640** su ESP32-CAM | Video in diretta |
+| **OV2640** su XIAO ESP32-S3 Sense | Video in diretta |
+| **Microfono digitale** su XIAO ESP32-S3 Sense | Rilevamento di suoni e rumori |
 | **DHT11** | Temperatura e umidità |
 | **VS1838B** | Ricevitore del telecomando IR |
 | **Potenziometro** | Limite manuale della velocità massima (tutto a sinistra = fermo) |
@@ -77,7 +79,7 @@ La sicurezza domestica è l'uso principale, ma il robot è pensato come una **pi
 | Q.tà | Componente | Note |
 |:-:|---|---|
 | 1 | ESP32 DevKit (WROOM) | Controller principale |
-| 1 | ESP32-CAM (OV2640) | Nella testa, trasmette il video |
+| 1 | Seeed Studio XIAO ESP32-S3 Sense (OV2640, microfono digitale, 8 MB PSRAM) | Nella testa: video e audio |
 | 1 | Lidar TF-Luna | UART, sulla corona rotante |
 | 1 | Micro servo SG90 | Gira la testa e la corona del lidar |
 | 2 | Motori TT + ruote da 65 mm | Trazione differenziale, carreggiata 130 mm |
@@ -116,7 +118,7 @@ flowchart LR
     SW --> B2["MT3608 #2<br>linea servo"]
     SW --> DRV["Driver motori<br>L9110S"]
     B1 --> ESP["ESP32<br>principale"]
-    B1 --> CAM["ESP32-CAM"]
+    B1 --> CAM["Camera XIAO<br>ESP32-S3 Sense"]
     B1 --> LUNA["TF-Luna"]
     ESP -->|3,3 V| SENS["Sensori I²C<br>e a basso consumo"]
     B2 --> SERVO["SG90"]
@@ -171,7 +173,7 @@ La regola finale: i VL53L0X segnalano un ostacolo solo **sotto i 30 cm**. La lun
 
 **Tre sensori, un solo indirizzo I²C.** Tutti i VL53L0X escono di fabbrica a `0x29`. Con due accesi insieme il bus andava in errore e le letture si mescolavano. La soluzione è una sequenza di avvio: si tengono i sensori spenti con XSHUT, poi si accendono uno alla volta dando a ognuno un nuovo indirizzo (`0x30`, `0x31`, `0x32`). Un sensore non ha la linea XSHUT, quindi il firmware deve gestire anche il reset dell'ESP32, quando quel sensore ha già il nuovo indirizzo.
 
-**ESP32-CAM che si riavviava di continuo.** Sotto carico la camera si resettava: scattava il rilevatore di brownout per i cali di tensione. Disattivarlo ha confermato la causa; la vera soluzione è una linea a 5 V stabile con un condensatore, dopo di che il rilevatore va riattivato.
+**ESP32-CAM che si riavviava di continuo.** Sotto carico la prima scheda camera (una ESP32-CAM, poi sostituita da una XIAO ESP32-S3 Sense) si resettava: scattava il rilevatore di brownout per i cali di tensione. Disattivarlo ha confermato la causa; la vera soluzione è una linea a 5 V stabile con un condensatore, dopo di che il rilevatore va riattivato.
 
 **Altri piccoli problemi:** "camera not supported" era il cavo flat o la frequenza XCLK; l'OLED è montato capovolto e va ruotato di 180° nel software.
 
@@ -179,15 +181,16 @@ La regola finale: i VL53L0X segnalano un ostacolo solo **sotto i 30 cm**. La lun
 
 - [x] Progettazione e stampa della scocca
 - [x] Alimentazione con ricarica USB-C
-- [x] Video in diretta dalla camera
+- [x] Video in diretta dalla camera (prima scheda)
 - [x] Servo, OLED e IMU testati
-- [x] Sensore davanti destra con adattatore inclinato
-- [ ] Sensori di sinistra e dietro
+- [x] Tutti e 3 i sensori di distanza montati sugli adattatori inclinati
+- [ ] Passaggio della camera alla XIAO ESP32-S3 Sense
 - [ ] Cablaggio rimanente (motori, comandi del coperchio, torretta)
 - [ ] Firmware principale: filtri dei sensori, rampe di velocità, LED di stato
 - [ ] Pattuglia autonoma
 - [ ] Reazione alla temperatura
 - [ ] Rilevamento del movimento
+- [ ] Rilevamento dei suoni
 - [ ] Telecomando IR
 - [ ] Calibrazione finale dei sensori
 
