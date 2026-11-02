@@ -2,7 +2,7 @@
 
 # 🛡️ Sentinel Robot Mini
 
-### Un piccolo robot autonomo da interno che pattuglia la casa, costruito da zero un sensore alla volta
+### Un piccolo robot autonomo da interno che pattuglia la casa, costruito da zero 
 
 *Basato su ESP32, completamente stampato in 3D, pensato per la sicurezza domestica e aperto a molto altro.*
 
