@@ -2,8 +2,7 @@
 
 # 🛡️ Sentinel Robot Mini
 
-### A small autonomous indoor patrol robot — built from scratch, one sensor at a time
-
+### A small autonomous indoor patrol robot — built from scratch
 *ESP32-based, fully 3D-printed, designed for home security and open to much more.*
 
 ![Platform](https://img.shields.io/badge/platform-ESP32-0078D6?style=for-the-badge&labelColor=555)
