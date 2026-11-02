@@ -32,32 +32,32 @@
 
 ## ✨ Cos'è
 
-**Sentinel Robot Mini** è un robot autonomo compatto (circa 18 cm di larghezza) che pattuglia gli spazi interni. Gira per la casa, evita gli ostacoli, trasmette video in diretta sulla sua rete Wi-Fi e controlla l'ambiente.
+Sentinel Robot Mini è un robot autonomo compatto (circa 18 cm di larghezza) che pattuglia gli spazi interni. Gira per la casa, evita gli ostacoli, trasmette video in diretta sulla sua rete Wi-Fi e controlla l'ambiente.
 
-La sicurezza domestica è l'uso principale, ma il robot è pensato come una **piattaforma generica**: sensori, alimentazione e firmware sono modulari, così si possono aggiungere nuove funzioni senza riprogettare l'hardware.
+La sicurezza domestica è l'uso principale, ma il robot è pensato come una piattaforma generica: sensori, alimentazione e firmware sono modulari, così si possono aggiungere nuove funzioni senza riprogettare l'hardware.
 
 ## 🎯 Obiettivi
 
-- **Imparare la robotica sul serio**: progettazione meccanica, elettronica di potenza, sensori e firmware, con ogni scelta testata e misurata invece che data per scontata.
-- **Costruire un prototipo funzionante di sicurezza domestica**: pattuglia autonoma, camera in diretta, monitoraggio dell'ambiente.
-- **Renderlo espandibile**: una base che possa crescere in altri progetti.
+- **Imparare la robotica sul serio:** progettazione meccanica, elettronica di potenza, sensori e firmware, con ogni scelta testata e misurata invece che data per scontata.
+- **Costruire un prototipo funzionante di sicurezza domestica:** pattuglia autonoma, camera in diretta, monitoraggio dell'ambiente.
+- **Renderlo espandibile:** una base che possa crescere in altri progetti.
 
 ## 🧭 Funzioni
 
 | Funzione | Stato |
 |---|---|
-| Video in diretta sulla rete Wi-Fi del robot | 🔧 Nuova scheda camera, in test |
+| Video in diretta sulla rete Wi-Fi del robot | ✅ Funziona (XIAO ESP32-S3 Sense) |
 | Testa rotante con camera e lidar a lunga distanza | ✅ Servo testato |
-| Rilevamento ostacoli a corto raggio (3 sensori laser a tempo di volo) | ✅ Tutti e 3 montati |
+| Rilevamento ostacoli a corto raggio (3 sensori laser a tempo di volo) | ✅ Tutti e 3 montati e testati |
 | Orientamento (giroscopio + accelerometro) | ✅ Testato |
 | Display OLED di stato | ✅ Testato |
 | Batteria ricaricabile via USB-C | ✅ Funziona |
-| Monitoraggio della temperatura e reazione | 📝 Previsto |
-| Pattuglia autonoma | 📝 Previsto |
-| Rilevamento del movimento | 📝 Previsto |
-| Rilevamento di suoni e rumori (microfono integrato) | 📝 Previsto |
-| Telecomando IR | 📝 Previsto |
-| Aggiornamenti OTA per la camera | 📝 Previsto |
+| Monitoraggio della temperatura e reazione | 🔧 Sensore testato, reazione da fare |
+| Pattuglia autonoma | 🔧 In test (motori e sensori testati) |
+| Rilevamento del movimento | 🔧 In test |
+| Rilevamento di suoni e rumori (microfono integrato) | 🔧 Microfono funzionante, rilevamento da fare |
+| Telecomando IR | 🔧 Ricevitore collegato, da testare |
+| Aggiornamenti OTA per la camera | 🔧 Nel firmware, da testare |
 
 ## 🔩 Hardware
 
@@ -65,21 +65,21 @@ La sicurezza domestica è l'uso principale, ma il robot è pensato come una **pi
 
 | Sensore | Ruolo |
 |---|---|
-| **TF-Luna** (lidar) | Distanza a lungo raggio, su una corona rotante per scansionare la stanza |
-| **3× VL53L0X** (laser a tempo di volo) | Ostacoli a corto raggio: davanti destra, davanti sinistra, dietro |
-| **MPU6050** (IMU) | Direzione e angoli di rotazione |
-| **OV2640** su XIAO ESP32-S3 Sense | Video in diretta |
-| **Microfono digitale** su XIAO ESP32-S3 Sense | Rilevamento di suoni e rumori |
-| **DHT11** | Temperatura e umidità |
-| **VS1838B** | Ricevitore del telecomando IR |
-| **Potenziometro** | Limite manuale della velocità massima (tutto a sinistra = fermo) |
+| TF-Luna (lidar) | Distanza a lungo raggio, su una corona rotante per scansionare la stanza |
+| 3× VL53L0X (laser a tempo di volo) | Ostacoli a corto raggio: davanti destra, davanti sinistra, dietro |
+| MPU6050 (IMU) | Direzione e angoli di rotazione |
+| OV3660 su XIAO ESP32-S3 Sense | Video in diretta |
+| Microfono digitale su XIAO ESP32-S3 Sense | Rilevamento di suoni e rumori |
+| DHT11 | Temperatura e umidità |
+| VS1838B | Ricevitore del telecomando IR |
+| Potenziometro | Limite manuale della velocità massima (tutto a sinistra = fermo) |
 
 ### Lista componenti
 
 | Q.tà | Componente | Note |
-|:-:|---|---|
+|---|---|---|
 | 1 | ESP32 DevKit (WROOM) | Controller principale |
-| 1 | Seeed Studio XIAO ESP32-S3 Sense (OV2640, microfono digitale, 8 MB PSRAM) | Nella testa: video e audio |
+| 1 | Seeed Studio XIAO ESP32-S3 Sense (OV3660, microfono digitale, 8 MB PSRAM) | Nella testa: video e audio |
 | 1 | Lidar TF-Luna | UART, sulla corona rotante |
 | 1 | Micro servo SG90 | Gira la testa e la corona del lidar |
 | 2 | Motori TT + ruote da 65 mm | Trazione differenziale, carreggiata 130 mm |
@@ -102,12 +102,13 @@ La sicurezza domestica è l'uso principale, ma il robot è pensato come una **pi
 
 ### Meccanica
 
-- Corpo a 12 lati, Ø 170 mm, pareti da 2,4 mm, stampato in **PETG** su Bambu Lab A1 mini (piatto 180 × 180 mm).
-- **Modello parametrico in Fusion**, generato da uno script Python.
+- Corpo a 12 lati, Ø 170 mm, pareti da 2,4 mm, stampato in PETG su Bambu Lab A1 mini (piatto 180 × 180 mm).
+- Modello parametrico in Fusion, generato da uno script Python.
 - Testa su una torretta: camera dentro, servo sopra, corona del lidar in cima.
-- **Adattatori inclinati** su misura per i VL53L0X (vedi *Lezioni imparate*).
+- Adattatori inclinati su misura per i VL53L0X (vedi Lezioni imparate).
 
 ## ⚡ Alimentazione
+
 
 ```mermaid
 flowchart LR
@@ -131,8 +132,8 @@ Massa comune a tutto. L'ESP32 legge la tensione della batteria con un partitore 
 
 | GPIO | Funzione |
 |---|---|
-| 21 / 22 | I²C SDA / SCL (OLED `0x3C`, MPU6050 `0x68`, VL53L0X `0x30–0x32`) |
-| 4, 14 | Linee XSHUT dei VL53L0X |
+| 21 / 22 | I²C SDA / SCL (OLED 0x3C, MPU6050 0x68, VL53L0X 0x30–0x32) |
+| 4, 14, 5 | Linee XSHUT dei VL53L0X (davanti destra, davanti sinistra, dietro) |
 | 16 / 17 | UART del TF-Luna |
 | 13 | Servo |
 | 25, 26, 27, 33 | Ingressi del L9110S |
@@ -166,12 +167,12 @@ flowchart TB
 |---|---|---|
 | v2 | Montaggio dritto | Incastro perfetto, ma vede ancora il pavimento |
 | v3 | Inclinato 15° in su | Urtava una torretta interna della scocca |
-| **v4** | 15° in su + scalino con 2,3 mm di spazio | ✅ Muro a ~96 cm, stabile ±4 mm |
+| v4 | 15° in su + scalino con 2,3 mm di spazio | ✅ Muro a ~96 cm, stabile ±4 mm |
 | v5 | 22° in su | Riserva, non serve |
 
-La regola finale: i VL53L0X segnalano un ostacolo solo **sotto i 30 cm**. La lunga distanza è compito del lidar.
+La regola finale: i VL53L0X segnalano un ostacolo solo sotto i 30 cm. La lunga distanza è compito del lidar.
 
-**Tre sensori, un solo indirizzo I²C.** Tutti i VL53L0X escono di fabbrica a `0x29`. Con due accesi insieme il bus andava in errore e le letture si mescolavano. La soluzione è una sequenza di avvio: si tengono i sensori spenti con XSHUT, poi si accendono uno alla volta dando a ognuno un nuovo indirizzo (`0x30`, `0x31`, `0x32`). Un sensore non ha la linea XSHUT, quindi il firmware deve gestire anche il reset dell'ESP32, quando quel sensore ha già il nuovo indirizzo.
+**Tre sensori, un solo indirizzo I²C.** Tutti i VL53L0X escono di fabbrica a 0x29. Con due accesi insieme il bus andava in errore e le letture si mescolavano. La soluzione è una sequenza di avvio: si tengono i sensori spenti con XSHUT, poi si accendono uno alla volta dando a ognuno un nuovo indirizzo (0x30, 0x31, 0x32). All'inizio un sensore non aveva la linea XSHUT; ora ce l'hanno tutti e tre (GPIO 4, 14 e 5), quindi la sequenza di avvio è la stessa per ogni sensore.
 
 **ESP32-CAM che si riavviava di continuo.** Sotto carico la prima scheda camera (una ESP32-CAM, poi sostituita da una XIAO ESP32-S3 Sense) si resettava: scattava il rilevatore di brownout per i cali di tensione. Disattivarlo ha confermato la causa; la vera soluzione è una linea a 5 V stabile con un condensatore, dopo di che il rilevatore va riattivato.
 
@@ -184,7 +185,7 @@ La regola finale: i VL53L0X segnalano un ostacolo solo **sotto i 30 cm**. La lun
 - [x] Video in diretta dalla camera (prima scheda)
 - [x] Servo, OLED e IMU testati
 - [x] Tutti e 3 i sensori di distanza montati sugli adattatori inclinati
-- [ ] Passaggio della camera alla XIAO ESP32-S3 Sense
+- [x] Passaggio della camera alla XIAO ESP32-S3 Sense
 - [ ] Cablaggio rimanente (motori, comandi del coperchio, torretta)
 - [ ] Firmware principale: filtri dei sensori, rampe di velocità, LED di stato
 - [ ] Pattuglia autonoma
@@ -196,17 +197,17 @@ La regola finale: i VL53L0X segnalano un ostacolo solo **sotto i 30 cm**. La lun
 
 ## 📁 Contenuto della repository
 
-> In lavorazione: viene pubblicata solo una parte del codice.
+In lavorazione: viene pubblicata solo una parte del codice.
 
 ## 👤 Autore
 
-**Stefano**, maker di 17 anni dall'Italia. Iniziato a fine settembre 2026, circa 30 ore di lavoro finora.
+Stefano, maker di 17 anni dall'Italia. Iniziato a fine settembre 2026, circa 30 ore di lavoro finora.
 
-- GitHub: *(questo profilo)*
-- LinkedIn: *(in arrivo)*
+- GitHub: (questo profilo)
+- LinkedIn: (in arrivo)
 
 ## 📄 Licenza
 
-© 2026 Stefano. **Tutti i diritti riservati.**
+© 2026 Stefano. Tutti i diritti riservati.
 
 Questa repository è pubblica solo per essere consultata e per scopi di studio. Nessuna parte (codice, modelli 3D, immagini, documentazione) può essere copiata, modificata, ridistribuita o usata a fini commerciali senza il permesso scritto dell'autore.
