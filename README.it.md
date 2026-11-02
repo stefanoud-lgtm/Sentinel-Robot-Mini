@@ -204,7 +204,6 @@ In lavorazione: viene pubblicata solo una parte del codice.
 Stefano, maker di 17 anni dall'Italia. Iniziato a fine settembre 2026, circa 30 ore di lavoro finora.
 
 - GitHub: (questo profilo)
-- LinkedIn: (in arrivo)
 
 ## 📄 Licenza
 
