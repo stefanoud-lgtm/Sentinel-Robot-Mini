@@ -186,12 +186,12 @@ La regola finale: i VL53L0X segnalano un ostacolo solo sotto i 30 cm. La lunga d
 - [x] Servo, OLED e IMU testati
 - [x] Tutti e 3 i sensori di distanza montati sugli adattatori inclinati
 - [x] Passaggio della camera alla XIAO ESP32-S3 Sense
-- [ ] Cablaggio rimanente (motori, comandi del coperchio, torretta)
+- [x] Cablaggio rimanente (motori, comandi del coperchio, torretta)
 - [ ] Firmware principale: filtri dei sensori, rampe di velocità, LED di stato
 - [ ] Pattuglia autonoma
 - [ ] Reazione alla temperatura
 - [ ] Rilevamento del movimento
-- [ ] Rilevamento dei suoni
+- [x] Rilevamento dei suoni
 - [ ] Telecomando IR
 - [ ] Calibrazione finale dei sensori
 
