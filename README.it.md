@@ -52,12 +52,12 @@ La sicurezza domestica è l'uso principale, ma il robot è pensato come una piat
 | Orientamento (giroscopio + accelerometro) | ✅ Testato |
 | Display OLED di stato | ✅ Testato |
 | Batteria ricaricabile via USB-C | ✅ Funziona |
-| Monitoraggio della temperatura e reazione | 🔧 Sensore testato, reazione da fare |
-| Pattuglia autonoma | 🔧 In test (motori e sensori testati) |
-| Rilevamento del movimento | 🔧 In test |
+| Monitoraggio della temperatura e reazione | ✅ Testato |
+| Pattuglia autonoma | ✅ Testato |
+| Rilevamento del movimento |✅ Testato|
 | Rilevamento di suoni e rumori (microfono integrato) | 🔧 Microfono funzionante, rilevamento da fare |
-| Telecomando IR | 🔧 Ricevitore collegato, da testare |
-| Aggiornamenti OTA per la camera | 🔧 Nel firmware, da testare |
+| Telecomando IR | ✅ Testato |
+| Aggiornamenti OTA per la camera | ✅ Testato |
 
 ## 🔩 Hardware
 
