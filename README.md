@@ -51,12 +51,12 @@ Home security is the core use case, but the robot is designed as a general-purpo
 | Orientation tracking (gyro + accelerometer) | ✅ Tested |
 | On-board OLED status display | ✅ Tested |
 | Rechargeable battery with USB-C charging | ✅ Working |
-| Temperature monitoring and reaction | 🔧 Sensor tested, reaction to do |
-| Autonomous patrol | 🔧 In testing (motors and sensors tested) |
-| Motion detection | 🔧 In testing |
+| Temperature monitoring and reaction | ✅ Tested|
+| Autonomous patrol | ✅ Tested |
+| Motion detection | ✅ Tested|
 | Sound and noise detection (on-board microphone) | 🔧 Microphone working, detection to do |
-| IR remote control | 🔧 Receiver wired, not yet tested |
-| Over-the-air updates for the camera | 🔧 In the firmware, not yet tested |
+| IR remote control | ✅ Tested |
+| Over-the-air updates for the camera | ✅ Tested |
 
 ## 🔩 Hardware
 
