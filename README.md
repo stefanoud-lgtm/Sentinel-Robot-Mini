@@ -185,12 +185,12 @@ The final rule: the VL53L0X sensors only flag obstacles closer than 30 cm. Long 
 - [x] All 3 distance sensors mounted on tilted adapters
 - [x] Camera upgrade to XIAO ESP32-S3 Sense
 - [x] Remaining wiring (motors, lid controls, turret)
-- [ ] Main firmware: sensor filtering, speed ramps, status LED
+- [x] Main firmware: sensor filtering, speed ramps, status LED
 - [x] Autonomous patrol
 - [x] Temperature reaction
 - [x] Motion detection
 - [x] Sound detection
-- [ ] IR remote control
+- [x] IR remote control
 - [ ] Final sensor calibration
 
 ## 📁 Repository contents
