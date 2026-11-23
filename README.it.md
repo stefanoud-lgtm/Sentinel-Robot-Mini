@@ -187,12 +187,12 @@ La regola finale: i VL53L0X segnalano un ostacolo solo sotto i 30 cm. La lunga d
 - [x] Tutti e 3 i sensori di distanza montati sugli adattatori inclinati
 - [x] Passaggio della camera alla XIAO ESP32-S3 Sense
 - [x] Cablaggio rimanente (motori, comandi del coperchio, torretta)
-- [ ] Firmware principale: filtri dei sensori, rampe di velocità, LED di stato
+- [x] Firmware principale: filtri dei sensori, rampe di velocità, LED di stato
 - [x] Pattuglia autonoma
 - [x] Reazione alla temperatura
 - [x] Rilevamento del movimento
 - [x] Rilevamento dei suoni
-- [ ] Telecomando IR
+- [x] Telecomando IR
 - [ ] Calibrazione finale dei sensori
 
 ## 📁 Contenuto della repository
